@@ -5,19 +5,17 @@ from datetime import datetime
 
 def logger(path):
     def dec_logger(func):
-        def wrapped(contacts_list):
-            return_value = func(contacts_list)
+        def wrapped(*args,**qwargs):
+            return_value = func(*args)
             current_fulldate = datetime.now()
             current_time = datetime.time(current_fulldate)
             current_date = datetime.date(current_fulldate)
             with open(path + 'log.txt', 'w') as f:
                 result = f'Time: {current_time}\nDate: {current_date}\nName func: ' \
-                         f'{func.__name__}\nValue: {contacts_list}\nReturn value: {return_value}'
-                f.write(str(result))
-            return result
-
+                         f'{func.__name__}\nValue: {args}\nReturn value: {return_value}'
+                f.write(result)
+            return return_value
         return wrapped
-
     return dec_logger
 
 
